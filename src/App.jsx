@@ -4,7 +4,7 @@ function App() {
 
   return (
     <>
-      <h1>Fynder-Frontend</h1>
+      <h1 className='bg-green-400 text-2xl font-bold'>Fynder-Frontend</h1>
     </>
   )
 }
