@@ -7,24 +7,22 @@ const LandingPage = () => {
     const theme = useSelector(store => store?.theme?.value)
   return (
     <>
-      <div className="relative w-screen h-screen overflow-x-hidden">
+      <div className="relative mx-auto min-h-screen">
         {/* Background Image */}
         <img
           src={APP_BG}
-          alt="Background"
-          className="absolute inset-0 w-full h-full object-cover brightness-60"
+          alt="Background image"
+          className="absolute w-full h-full object-cover brightness-60"
         />
 
         {/* Overlay Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          {/* Dark Overlay - reduced opacity */}
-          <div className="absolute inset-0 bg-opacity-70"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">         
 
           {/* Content */}
-          <div className="relative z-20 flex flex-col items-center justify-start">
-            {/* Catchy Tagline */}
+          <div className="relative z-11 flex flex-col items-center justify-center">
+            
             <div className="text-center mb-8">
-              <p className="text-3xl md:text-4xl lg:text-5xl text-white drop-shadow-lg mb-4">
+              <p className="text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg mb-4 pr-4">
                 Connect. Chat. Grow.
               </p>
               <p className="text-2xl md:text-3xl lg:text-4xl text-primary font-semibold drop-shadow-md mt-2">
