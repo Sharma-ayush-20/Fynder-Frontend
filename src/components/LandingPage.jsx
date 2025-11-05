@@ -7,7 +7,7 @@ const LandingPage = () => {
     const theme = useSelector(store => store?.theme?.value)
   return (
     <>
-      <div className="relative mx-auto min-h-screen">
+      <div className="relative mx-auto min-h-screen overflow-x-hidden">
         {/* Background Image */}
         <img
           src={APP_BG}
@@ -25,14 +25,14 @@ const LandingPage = () => {
               <p className="text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg mb-4 pr-4">
                 Connect. Chat. Grow.
               </p>
-              <p className="text-2xl md:text-3xl lg:text-4xl text-primary font-semibold drop-shadow-md mt-2">
+              <p className={`text-2xl md:text-3xl lg:text-4xl ${theme === "dark" ? "text-primary" : "text-secondary"} font-semibold drop-shadow-md mt-2`}>
                 Expand your network instantly
               </p>
             </div>
 
             {/* Buttons */}
             <div className="text-center mb-6">
-              <button className={`btn btn-primary ${theme === "dark" ? "text-white" : "text-black"} btn-lg px-8 py-3 text-xl shadow-lg hover:scale-105 transition-transform duration-300`}>
+              <button className={`btn ${theme === "dark" ? "text-white btn-accent" : "text-black btn-accent"} btn-lg px-8 py-3 text-xl shadow-lg hover:scale-105 transition-transform duration-300`}>
                 Start your journey today
               </button>
             </div>
