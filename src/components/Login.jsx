@@ -1,26 +1,32 @@
 import React, { useState } from "react";
-import { APP_BG } from "../utils/constants";
+import { APP_BG, baseUrl } from "../utils/constants";
 import Footer from "./Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const theme = useSelector((store) => store?.theme?.value);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:4000/login`,
+        `${baseUrl}/login`,
         { email, password },
         { withCredentials: true }
       );
       if(response.status === 200){
         toast.success(response.data.message)
-        console.log(response.data.user)
+        // console.log(response.data.user)
+        dispatch(addUser(response.data.user))
+        navigate("/")
       }
     } catch (error) {
       console.log("Error", error.message);

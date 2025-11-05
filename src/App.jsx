@@ -6,6 +6,7 @@ import Body from "./components/Body";
 import Login from "./components/Login.jsx";
 import LandingPage from "./components/LandingPage.jsx";
 import { Toaster } from 'react-hot-toast';
+import Feed from "./components/Feed.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Body />}>
               <Route path="/login" element={<Login />}/>
               <Route path="/landingpage" element={<LandingPage />}/>
+              <Route path="/" element={<Feed />}/>
             </Route>
           </Routes>
         </BrowserRouter>

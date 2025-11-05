@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const theme = useSelector((store) => store?.theme?.value);
+  const user = useSelector((store) => store?.user);
+  // console.log(user);
   return (
     <div
       className={`navbar ${
@@ -22,43 +24,49 @@ function Navbar() {
         <ThemeToggle />
 
         {/* Avatar Dropdown */}
-        <div className="dropdown dropdown-end md:pr-6 pr-8">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar md:mr-2 hover:scale-105 transition-transform duration-300"
-          >
-            <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img
-                alt="User avatar"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+        {user && (
+          <div className="dropdown dropdown-end md:pr-6 pr-8">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar md:mr-2 hover:scale-105 transition-transform duration-300"
+            >
+              <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img
+                  alt="User avatar"
+                  src={` ${
+                    user
+                      ? user.photoUrl
+                      : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  }`}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Dropdown Menu */}
-          <ul
-            tabIndex={0}
-            className="menu menu-md dropdown-content bg-base-200 rounded-2xl mt-3 w-44 p-3 shadow-lg border border-base-300
+            {/* Dropdown Menu */}
+            <ul
+              tabIndex={0}
+              className="menu menu-md dropdown-content bg-base-200 rounded-2xl mt-3 w-44 p-3 shadow-lg border border-base-300
               animate-fadeIn backdrop-blur-md"
-          >
-            <li>
-              <a className="font-semibold text-base hover:text-primary transition-all duration-300">
-                Profile
-              </a>
-            </li>
-            <li>
-              <a className="font-semibold text-base hover:text-primary transition-all duration-300">
-                Settings
-              </a>
-            </li>
-            <li>
-              <a className="font-semibold text-base text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition-all duration-300">
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
+            >
+              <li>
+                <a className="font-semibold text-base hover:text-primary transition-all duration-300">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a className="font-semibold text-base hover:text-primary transition-all duration-300">
+                  Settings
+                </a>
+              </li>
+              <li>
+                <a className="font-semibold text-base text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition-all duration-300">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
