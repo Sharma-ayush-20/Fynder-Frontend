@@ -13,6 +13,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,15 +23,16 @@ function Login() {
         { email, password },
         { withCredentials: true }
       );
-      if(response.status === 200){
-        toast.success(response.data.message)
+      if (response.status === 200) {
+        toast.success(response.data.message);
         // console.log(response.data.user)
-        dispatch(addUser(response.data.user))
-        navigate("/")
+        dispatch(addUser(response.data.user));
+        navigate("/");
       }
     } catch (error) {
-      console.log("Error", error.message);
-      toast.error(error.message)
+      setError(error?.response?.data?.message);
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -59,47 +61,55 @@ function Login() {
             </p>
 
             {/* Form */}
-            <form className="w-full flex flex-col" onSubmit={handleSubmit}>
+            <form
+              className="w-full max-w-md mx-auto flex flex-col gap-4 p-6 rounded-xl shadow-md"
+              onSubmit={handleSubmit}
+            >
               {/* Email */}
-              <label className="label w-full">
-                <span className="label-text mb-1 sm:mb-2 text-sm sm:text-base">
+              <label className="flex flex-col w-full">
+                <span className="text-sm sm:text-base mb-1">
                   Email
                 </span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your email"
+                  required
+                />
               </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="input input-bordered w-full mb-4 text-sm sm:text-base"
-                placeholder="Enter your email"
-                required
-              />
 
               {/* Password */}
-              <label className="label w-full">
-                <span className="label-text mb-1 sm:mb-2 text-sm sm:text-base">
+              <label className="flex flex-col w-full">
+                <span className="text-sm sm:text-base mb-1">
                   Password
                 </span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your password"
+                  required
+                />
               </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input input-bordered w-full mb-6 text-sm sm:text-base"
-                placeholder="Enter your password"
-                required
-              />
+
+              {/* Error Message */}
+              {error && (
+                <p className="text-red-500 text-sm sm:text-base">{error}</p>
+              )}
 
               {/* Buttons */}
               <button
                 type="submit"
-                className="btn btn-primary w-full mb-2 hover:scale-105 transition-transform"
+                className="btn btn-primary w-full py-2 text-sm sm:text-base mb-2 hover:scale-105 transition-transform duration-200"
               >
                 Login
               </button>
               <button
                 type="button"
-                className="btn btn-ghost w-full hover:scale-105 transition-transform"
+                className="btn btn-ghost w-full py-2 text-sm sm:text-base hover:scale-105 transition-transform duration-200"
               >
                 Sign Up
               </button>
