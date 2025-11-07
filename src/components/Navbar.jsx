@@ -1,11 +1,32 @@
 import React from "react";
 import ThemeToggle from "./themeToggle";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../utils/constants";
+import { removeUser } from "../utils/userSlice";
+import toast from "react-hot-toast";
 
 function Navbar() {
   const theme = useSelector((store) => store?.theme?.value);
   const user = useSelector((store) => store?.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // console.log(user);
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/logout`, {}, {withCredentials: true})
+      if(response.status === 200){
+        dispatch(removeUser());
+        toast.success(response.data.message);
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
   return (
     <div
       className={`navbar ${
@@ -60,9 +81,9 @@ function Navbar() {
                 </a>
               </li>
               <li>
-                <a className="font-semibold text-base text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition-all duration-300">
+                <Link onClick={handleLogout} className="font-semibold text-base text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition-all duration-300">
                   Logout
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

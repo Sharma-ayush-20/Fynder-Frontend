@@ -21,7 +21,7 @@ function Body() {
       }
     } catch (error) {
       if(error.status === 401){
-        toast.error(error.response.data.message)
+        // toast.error(error.response.data.message)
         navigate("/login")
       }
       console.log(error)
