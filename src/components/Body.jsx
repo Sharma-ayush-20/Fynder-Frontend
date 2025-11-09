@@ -16,7 +16,7 @@ function Body() {
     try {
       const response = await axios.get(`${baseUrl}/profile/view`, {withCredentials: true})
       if(response.status === 200){
-        console.log(response)
+        // console.log(response)
         dispatch(addUser(response.data.user))
       }
     } catch (error) {
