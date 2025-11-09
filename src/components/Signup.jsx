@@ -1,26 +1,28 @@
 import React, { useState } from "react";
-import { APP_BG, baseUrl } from "../utils/constants";
 import Footer from "./Footer";
-import { useDispatch, useSelector } from "react-redux";
+import { APP_BG, baseUrl } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/userSlice";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const theme = useSelector((store) => store?.theme?.value);
+function Signup() {
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${baseUrl}/login`,
-        { email, password },
+        `${baseUrl}/signup`,
+        { firstName, lastName, email, password },
         { withCredentials: true }
       );
       if (response.status === 200) {
@@ -31,8 +33,8 @@ function Login() {
       }
     } catch (error) {
       setError(error?.response?.data?.message);
-      console.log(error);
-      toast.error(error.message);
+    //   console.log(error);
+    //   toast.error(error.message);
     }
   };
 
@@ -52,12 +54,12 @@ function Login() {
           <div className="bg-base-300/95 p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-xs sm:max-w-sm md:max-w-md flex flex-col items-center">
             {/* Heading */}
             <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-primary text-center">
-              Welcome Back
+               Let’s Get You Onboard 🚀
             </h1>
 
             {/* Subtitle */}
             <p className="text-base-content/80 mb-6 text-xs sm:text-base text-center">
-              Sign in to your account to continue to your dashboard
+              Sign up and explore everything we’ve built just for you.
             </p>
 
             {/* Form */}
@@ -65,11 +67,34 @@ function Login() {
               className="w-full max-w-md mx-auto flex flex-col gap-4 p-6 rounded-xl shadow-md"
               onSubmit={handleSubmit}
             >
+            {/* firstname */}
+              <label className="flex flex-col w-full">
+                <span className="text-sm sm:text-base mb-1">Firstname</span>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your firstname"
+                  required
+                />
+              </label>
+
+              {/* lastname */}
+              <label className="flex flex-col w-full">
+                <span className="text-sm sm:text-base mb-1">Lastname</span>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter your lastname"
+                />
+              </label>
+
               {/* Email */}
               <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">
-                  Email
-                </span>
+                <span className="text-sm sm:text-base mb-1">Email</span>
                 <input
                   type="email"
                   value={email}
@@ -82,9 +107,7 @@ function Login() {
 
               {/* Password */}
               <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">
-                  Password
-                </span>
+                <span className="text-sm sm:text-base mb-1">Password</span>
                 <input
                   type="password"
                   value={password}
@@ -105,13 +128,13 @@ function Login() {
                 type="submit"
                 className="btn btn-primary w-full py-2 text-sm sm:text-base mb-2 hover:scale-105 transition-transform duration-200"
               >
-                Login
+                Sign Up
               </button>
               <button
                 type="button"
                 className="btn btn-ghost w-full py-2 text-sm sm:text-base hover:scale-105 transition-transform duration-200"
               >
-                Sign Up
+                login
               </button>
             </form>
           </div>
@@ -122,4 +145,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

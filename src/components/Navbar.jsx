@@ -31,7 +31,7 @@ function Navbar() {
     <div
       className={`navbar ${
         theme === "dark" ? "bg-base-300" : "bg-base-100"
-      } shadow-md backdrop-blur-sm px-4`}
+      } shadow-md backdrop-blur-sm px-4 z-[9999]`}
     >
       {/* Left Section - Logo */}
       <div className="flex-1">
@@ -46,7 +46,7 @@ function Navbar() {
 
         {/* Avatar Dropdown */}
         {user && (
-          <div className="dropdown dropdown-end md:pr-6 pr-8">
+          <div className="dropdown dropdown-end md:pr-6 pr-8 z-9999">
             <div
               tabIndex={0}
               role="button"
@@ -71,9 +71,9 @@ function Navbar() {
               animate-fadeIn backdrop-blur-md"
             >
               <li>
-                <a className="font-semibold text-base hover:text-primary transition-all duration-300">
+                <Link to={"/profile"} className="font-semibold text-base hover:text-primary transition-all duration-300">
                   Profile
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="font-semibold text-base hover:text-primary transition-all duration-300">

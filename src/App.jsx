@@ -8,6 +8,7 @@ import LandingPage from "./components/LandingPage.jsx";
 import { Toaster } from 'react-hot-toast';
 import Feed from "./components/Feed.jsx";
 import Profile from "./components/Profile.jsx";
+import Signup from "./components/Signup.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Body />}>
               <Route path="/login" element={<Login />}/>
+              <Route path="/signup" element={<Signup />}/>
               <Route path="/landingpage" element={<LandingPage />}/>
               <Route path="/" element={<Feed />}/>
               <Route path="/profile" element={<Profile />}/>
