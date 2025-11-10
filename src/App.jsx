@@ -1,33 +1,20 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
+import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import appStore from "./utils/appStore.jsx";
-import Body from "./components/Body";
-import Login from "./components/Login.jsx";
-import LandingPage from "./components/LandingPage.jsx";
-import { Toaster } from 'react-hot-toast';
-import Feed from "./components/Feed.jsx";
-import Profile from "./components/Profile.jsx";
-import Signup from "./components/Signup.jsx";
+import appStore from "./utils/appStore";
+import { Toaster } from "react-hot-toast";
+import AppContent from "./components/AppContent"; 
 
 function App() {
   return (
-    <>
-      <Provider store={appStore}>
-        <Toaster />
-        <BrowserRouter basename="/">
-          <Routes>
-            <Route path="/" element={<Body />}>
-              <Route path="/login" element={<Login />}/>
-              <Route path="/signup" element={<Signup />}/>
-              <Route path="/landingpage" element={<LandingPage />}/>
-              <Route path="/" element={<Feed />}/>
-              <Route path="/profile" element={<Profile />}/>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
-    </>
+    <Provider store={appStore}>
+      <Toaster
+        position="top-right"
+        containerStyle={{ top: 80 }}
+      />
+      <BrowserRouter>
+        <AppContent /> 
+      </BrowserRouter>
+    </Provider>
   );
 }
 
