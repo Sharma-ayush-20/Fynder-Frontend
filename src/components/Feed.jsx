@@ -31,7 +31,6 @@ function Feed() {
   return (
     <div className="flex min-h-screen bg-base-200">
 
-      {/* ===== RIGHT FEED SECTION ===== */}
       <div className="flex-1 p-6">
         <h1 className="text-3xl font-bold mb-6 text-primary">Discover People</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
