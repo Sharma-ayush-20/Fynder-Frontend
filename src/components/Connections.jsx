@@ -32,8 +32,8 @@ function Connections() {
   }, []);
 
   return (
-    <div className="min-h-screen p-4 sm:p-6">
-      <h1 className="text-3xl font-bold text-primary mb-6">Connections</h1>
+    <div className="p-4 sm:p-6">
+      <h1 className="text-3xl font-bold text-primary mb-10 mt-10 sm:mt-0 sm:mb-6">Connections</h1>
 
       {!connections || connections.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-center py-12">

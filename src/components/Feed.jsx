@@ -29,21 +29,18 @@ function Feed() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-base-200">
-
-      <div className="flex-1 p-6">
-        <h1 className="text-3xl font-bold mb-6 text-primary">Discover People</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {feed && feed.length > 0 ? (           
-              <UserCard user={feed[0]} />
-          ) : (
-            <div className="col-span-full text-center text-gray-500">
-              No users found 💔
-            </div>
-          )}
-        </div>
+    <>
+      <h1 className="text-3xl font-extrabold text-primary mb-8 text-center tracking-tight">Discover People</h1>
+      <div className="mt-10 bg-base-200 px-4">
+        {feed && feed.length > 0 ? (
+          <UserCard user={feed[0]} />
+        ) : (
+          <div className="col-span-full text-center text-gray-500">
+            No users found 💔
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 

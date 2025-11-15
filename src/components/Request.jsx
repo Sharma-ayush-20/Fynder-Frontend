@@ -46,8 +46,8 @@ function Request() {
   }, []);
 
   return (
-    <div className="min-h-screen p-4 sm:p-6">
-      <h1 className="text-3xl font-bold text-primary mb-6">
+    <div className="p-4 sm:p-6">
+      <h1 className="text-3xl font-bold text-primary mb-6 mt-10 sm:mt-0">
         Connection Requests
       </h1>
 

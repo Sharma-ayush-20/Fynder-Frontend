@@ -16,74 +16,75 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(`${baseUrl}/logout`, {}, {withCredentials: true})
-      if(response.status === 200){
+      const response = await axios.post(
+        `${baseUrl}/logout`,
+        {},
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
         dispatch(removeUser());
         toast.success(response.data.message);
         navigate("/login");
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
-  }
+  };
 
   return (
     <div
-      className={`navbar ${
-        theme === "dark" ? "bg-base-300" : "bg-base-100"
+      className={`navbar fixed top-0 left-0 w-full h-16 ${
+        theme === "dark" ? "bg-base-300/80" : "bg-base-100/80"
       } shadow-md backdrop-blur-sm px-4 z-[9999]`}
     >
       {/* Left Section - Logo */}
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-3xl sm:text-4xl font-bold tracking-tight">
-          🌿 fynder
-        </a>
+        <span className="sm:pl-4 pl-2 text-4xl sm:text-5xl font-medium tracking-tight hover:opacity-80 transition cursor-pointer">
+          fynder
+        </span>
       </div>
 
       {/* Right Section - Theme + Profile */}
-      <div className="flex-none flex items-center gap-3">
+      <div className="flex items-center gap-5 pr-2 sm:pr-6">
+        {/* Theme Toggle */}
         <ThemeToggle />
 
         {/* Avatar Dropdown */}
         {user && (
-          <div className="dropdown dropdown-end md:pr-6 pr-8 z-9999">
+          <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar md:mr-2 hover:scale-105 transition-transform duration-300"
+              className="avatar cursor-pointer hover:scale-110 transition-all duration-300"
             >
-              <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img
-                  alt="User avatar"
-                  src={` ${
-                    user
-                      ? user.photoUrl
-                      : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  }`}
-                />
+              <div className="w-11 h-11 rounded-full ring-2 ring-primary/40 ring-offset-2 ring-offset-base-100 shadow-md overflow-hidden">
+                <img alt="User avatar" src={user.photoUrl} />
               </div>
             </div>
 
             {/* Dropdown Menu */}
             <ul
               tabIndex={0}
-              className="menu menu-md dropdown-content bg-base-200 rounded-2xl mt-3 w-44 p-3 shadow-lg border border-base-300
-              animate-fadeIn backdrop-blur-md"
+              className="menu menu-sm dropdown-content bg-base-200 rounded-xl mt-3 w-48 p-3
+        shadow-xl border border-base-300/40 backdrop-blur-md animate-fadeIn"
             >
               <li>
-                <Link to={"/profile"} className="font-semibold text-base hover:text-primary transition-all duration-300">
+                <Link
+                  to="/profile"
+                  className="text-base font-medium hover:bg-base-300 rounded-lg px-2 py-2 transition-all duration-200"
+                >
                   Profile
                 </Link>
               </li>
+
               <li>
-                <a className="font-semibold text-base hover:text-primary transition-all duration-300">
-                  Settings
-                </a>
-              </li>
-              <li>
-                <Link onClick={handleLogout} className="font-semibold text-base text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition-all duration-300">
+                <button
+                  onClick={handleLogout}
+                  className="text-base font-medium text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 
+            rounded-lg px-2 py-2 transition-all duration-200"
+                >
                   Logout
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
