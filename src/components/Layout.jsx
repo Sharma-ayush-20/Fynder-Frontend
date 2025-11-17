@@ -21,7 +21,7 @@ function Layout() {
 
       {/* sidebar  */}
       <div
-        className={`fixed top-0 left-0 min-h-screen bg-base-100 shadow-xl pt-20 px-6 flex flex-col justify-between z-50 overflow-y-auto transition-all duration-300
+        className={`fixed top-0 left-0 min-h-screen bg-base-100 shadow-xl pt-20 px-6 flex flex-col justify-between z-50 overflow-y-auto transition-all duration-300 border-r border-base-300 
       ${
         isOpen
           ? "translate-x-0 w-60"

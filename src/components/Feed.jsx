@@ -30,8 +30,8 @@ function Feed() {
 
   return (
     <>
-      <h1 className="text-3xl font-extrabold text-primary mb-8 text-center tracking-tight">Discover People</h1>
-      <div className="mt-10 bg-base-200 px-4">
+      {/* <h1 className="text-3xl font-extrabold text-primary mb-8 text-center tracking-tight">Discover People</h1> */}
+      <div className="mt-20 sm:mt-6 bg-base-200 px-4">
         {feed && feed.length > 0 ? (
           <UserCard user={feed[0]} />
         ) : (

@@ -24,39 +24,62 @@ function UserCard({ user }) {
   };
 
   return (
-    <div className="relative w-full flex justify-center items-center">
-      <div className="relative w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl select-none">
+    <div className="flex w-full sm:pl-16">
+      <div
+        className="
+      relative w-full max-w-sm 
+      rounded overflow-hidden 
+      shadow-xl bg-black 
+      select-none
+    "
+      >
         {/* USER IMAGE */}
         <img
           src={user?.photoUrl}
           alt="User"
-          className="w-full h-[70vh] sm:h-[420px] object-cover"
+          className="w-full h-[580px] sm:h-[502px] object-cover"
         />
 
-        {/* GRADIENT OVERLAY */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black/80 to-transparent"></div>
+        {/* GRADIENT OVERLAY LIKE INSTAGRAM */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/70"></div>
 
         {/* USER DETAILS */}
-        <div className="absolute bottom-4 left-4 text-white">
-          <h2 className="text-2xl font-bold">
+        <div className="absolute bottom-20 left-4 right-4 text-white">
+          <h2 className="text-3xl font-semibold drop-shadow-lg">
             {user.firstName}, {user.age}
           </h2>
-          <p className="text-sm opacity-90">{user.gender}</p>
-          <p className="text-xs opacity-80 mt-1 max-w-[250px]">{user.about}</p>
+
+          <p className="text-sm opacity-90 mt-1">{user.gender}</p>
+
+          <p className="text-xs opacity-80 mt-2 line-clamp-2">{user.about}</p>
         </div>
 
-        {/* ACTION BUTTONS */}
-        <div className="absolute bottom-4 right-4 flex gap-4">
+        {/* ACTION BUTTONS  */}
+        <div className="absolute bottom-6 sm:left-70 left-60 -translate-x-1/2 flex gap-6">
+          {/* Reject */}
           <button
             onClick={() => handleSendConnection("ignored", user._id)}
-            className="btn w-14 h-14 rounded-full bg-white text-red-500 shadow-lg hover:scale-110 transition"
+            className="
+          w-14 h-14 flex items-center justify-center
+          bg-white rounded-full shadow-lg
+          text-red-500 text-2xl font-bold
+          hover:scale-110 active:scale-90 
+          transition-all
+        "
           >
             ✖
           </button>
 
+          {/* Like */}
           <button
             onClick={() => handleSendConnection("interested", user._id)}
-            className="btn w-14 h-14 rounded-full bg-white text-green-500 shadow-lg hover:scale-110 transition"
+            className="
+          w-14 h-14 flex items-center justify-center
+          bg-white rounded-full shadow-lg
+          text-green-500 text-2xl font-bold
+          hover:scale-110 active:scale-90 
+          transition-all
+        "
           >
             ❤
           </button>
