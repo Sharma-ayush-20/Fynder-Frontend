@@ -38,85 +38,107 @@ function Login() {
 
   return (
     <>
-      <div className="relative min-h-screen flex flex-col">
+      <div className="relative sm:mt-2 min-h-screen flex items-center justify-center">
         {/* Background Image */}
         <img
           src={APP_BG}
           alt="Background"
-          className="absolute inset-0 w-full h-full object-cover brightness-60"
+          className="absolute inset-0 w-full h-full object-cover brightness-70"
         />
 
-        {/* Overlay Content */}
-        <div className="relative flex flex-1 items-center w-full justify-center px-4 py-8">
-          {/* Login Card */}
-          <div className="bg-base-300/95 p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-xs sm:max-w-sm md:max-w-md flex flex-col items-center">
-            {/* Heading */}
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-primary text-center">
-              Welcome Back
-            </h1>
+      {/* Login Card */}
+<div
+  className="
+    relative z-10
+    bg-base-100 dark:bg-base-300
+    p-8 sm:p-10
+    rounded-2xl
+    shadow-xl
+    w-full max-w-xs sm:max-w-sm md:max-w-md
+    border border-base-300/40
+    flex flex-col
+    min-h-[430px] sm:min-h-[480px] 
+    justify-center sm:mt-10
+  "
+>
+  {/* Heading */}
+  <h1 className="text-3xl sm:text-4xl font-semibold text-primary text-center mb-3 leading-tight">
+    Welcome Back 👋
+  </h1>
 
-            {/* Subtitle */}
-            <p className="text-base-content/80 mb-6 text-xs sm:text-base text-center">
-              Sign in to your account to continue to your dashboard
-            </p>
+  {/* Subtitle */}
+  <p className="text-base-content/70 text-center mb-8 text-sm sm:text-base leading-relaxed">
+    Continue your Fynder journey and connect with amazing people.
+  </p>
 
-            {/* Form */}
-            <form
-              className="w-full max-w-md mx-auto flex flex-col gap-4 p-6 rounded-xl shadow-md"
-              onSubmit={handleSubmit}
-            >
-              {/* Email */}
-              <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">
-                  Email
-                </span>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your email"
-                  required
-                />
-              </label>
+  {/* Form */}
+  <form className="flex flex-col gap-5 mt-2" onSubmit={handleSubmit}>
+    {/* Email */}
+    <label className="flex flex-col w-full">
+      <span className="text-sm mb-1 font-medium">Email</span>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="
+          input input-bordered w-full 
+          text-sm rounded-md
+          h-11
+        "
+        placeholder="Enter your email"
+        required
+      />
+    </label>
 
-              {/* Password */}
-              <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">
-                  Password
-                </span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your password"
-                  required
-                />
-              </label>
+    {/* Password */}
+    <label className="flex flex-col w-full">
+      <span className="text-sm mb-1 font-medium">Password</span>
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="
+          input input-bordered w-full 
+          text-sm rounded-md
+          h-11
+        "
+        placeholder="Enter your password"
+        required
+      />
+    </label>
 
-              {/* Error Message */}
-              {error && (
-                <p className="text-red-500 text-sm sm:text-base">{error}</p>
-              )}
+    {/* Error */}
+    {error && (
+      <p className="text-red-500 text-sm text-center">{error}</p>
+    )}
 
-              {/* Buttons */}
-              <button
-                type="submit"
-                className="btn btn-primary w-full py-2 text-sm sm:text-base mb-2 hover:scale-105 transition-transform duration-200"
-              >
-                Login
-              </button>
-              <button
-                type="button"
-                className="btn btn-ghost w-full py-2 text-sm sm:text-base hover:scale-105 transition-transform duration-200"
-              >
-                Sign Up
-              </button>
-            </form>
-          </div>
-        </div>
+    {/* Login Button */}
+    <button
+      type="submit"
+      className="
+        btn btn-primary w-full 
+        text-sm sm:text-base py-3 mt-2 rounded-md
+      "
+    >
+      Login
+    </button>
+
+    {/* Sign Up */}
+    <button
+    onClick={() => navigate("/signup")}
+      type="button"
+      className="
+        btn btn-ghost w-full text-sm sm:text-base py-3 rounded-md
+      "
+    >
+      Create an Account
+    </button>
+  </form>
+</div>
+
+
       </div>
+
       <Footer />
     </>
   );

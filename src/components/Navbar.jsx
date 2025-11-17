@@ -65,12 +65,12 @@ function Navbar() {
             {/* Dropdown Menu */}
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-xl mt-3 w-48 p-3 shadow-xl border border-base-300/40 backdrop-blur-md animate-fadeIn"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-xl mt-5 w-48 p-3 shadow-xl border border-base-300/40 backdrop-blur-md animate-fadeIn"
             >
               <li>
                 <Link
                   to="/profile"
-                  className="text-base font-medium rounded-lg px-2 py-2transition-all duration-200hover:bg-base-200 dark:hover:bg-base-300"
+                  className="text-base font-medium rounded-lg px-2 py-2 transition-all duration-200 hover:bg-base-200 dark:hover:bg-base-300"
                 >
                   Profile
                 </Link>
@@ -79,7 +79,7 @@ function Navbar() {
               <li>
                 <button
                   onClick={handleLogout}
-                  className="text-base font-medium rounded-lg px-2 py-2transition-all duration-200 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40"
+                  className="text-base font-medium rounded-lg px-2 py-2 transition-all duration-200 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40"
                 >
                   Logout
                 </button>

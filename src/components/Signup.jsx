@@ -40,106 +40,135 @@ function Signup() {
 
   return (
     <>
-      <div className="relative min-h-screen flex flex-col">
-        {/* Background Image */}
-        <img
-          src={APP_BG}
-          alt="Background"
-          className="absolute inset-0 w-full h-full object-cover brightness-60"
-        />
+     <div className="relative min-h-screen flex items-center justify-center px-4">
 
-        {/* Overlay Content */}
-        <div className="relative flex flex-1 items-center w-full justify-center px-4 py-8">
-          {/* Login Card */}
-          <div className="bg-base-300/95 p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-xs sm:max-w-sm md:max-w-md flex flex-col items-center">
-            {/* Heading */}
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-primary text-center">
-               Let’s Get You Onboard 🚀
-            </h1>
+  {/* Background Image */}
+  <img
+    src={APP_BG}
+    alt="Background"
+    className="absolute inset-0 w-full h-full object-cover brightness-60"
+  />
 
-            {/* Subtitle */}
-            <p className="text-base-content/80 mb-6 text-xs sm:text-base text-center">
-              Sign up and explore everything we’ve built just for you.
-            </p>
+  {/* SIGNUP CARD */}
+  <div
+    className="
+      relative z-10 mt-10
+      bg-base-100/95 dark:bg-base-300/95
+      backdrop-blur-xl
+      border border-base-300/50
+      shadow-2xl 
+      rounded-xl
+      w-full max-w-2xl
+      p-8 sm:p-10
+      animate-fadeIn
+    "
+  >
+    {/* Heading */}
+    <h1 className="text-3xl font-bold text-primary text-center">
+      Let’s Get You Onboard 🚀
+    </h1>
 
-            {/* Form */}
-            <form
-              className="w-full max-w-md mx-auto flex flex-col gap-4 p-6 rounded-xl shadow-md"
-              onSubmit={handleSubmit}
-            >
-            {/* firstname */}
-              <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">Firstname</span>
-                <input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your firstname"
-                  required
-                />
-              </label>
+    <p className="text-center text-base-content/70 mt-1 mb-8 text-sm">
+      Sign up and explore everything we’ve built just for you.
+    </p>
 
-              {/* lastname */}
-              <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">Lastname</span>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your lastname"
-                />
-              </label>
+    {/* FORM */}
+    <form onSubmit={handleSubmit}
+      className="
+        grid grid-cols-1 sm:grid-cols-2 
+        gap-6
+      "
+    >
+      {/* LEFT COLUMN */}
+      <div className="flex flex-col gap-4">
 
-              {/* Email */}
-              <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">Email</span>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your email"
-                  required
-                />
-              </label>
+        {/* Firstname */}
+        <label className="flex flex-col">
+          <span className="text-sm mb-1">Firstname</span>
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="input input-bordered rounded-lg h-11"
+            placeholder="Enter your firstname"
+            required
+          />
+        </label>
 
-              {/* Password */}
-              <label className="flex flex-col w-full">
-                <span className="text-sm sm:text-base mb-1">Password</span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input input-bordered w-full text-sm sm:text-base rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500"
-                  placeholder="Enter your password"
-                  required
-                />
-              </label>
+        {/* Lastname */}
+        <label className="flex flex-col">
+          <span className="text-sm mb-1">Lastname</span>
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="input input-bordered rounded-lg h-11"
+            placeholder="Enter your lastname"
+          />
+        </label>
 
-              {/* Error Message */}
-              {error && (
-                <p className="text-red-500 text-sm sm:text-base">{error}</p>
-              )}
-
-              {/* Buttons */}
-              <button
-                type="submit"
-                className="btn btn-primary w-full py-2 text-sm sm:text-base mb-2 hover:scale-105 transition-transform duration-200"
-              >
-                Sign Up
-              </button>
-              <button
-                type="button"
-                className="btn btn-ghost w-full py-2 text-sm sm:text-base hover:scale-105 transition-transform duration-200"
-              >
-                login
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
+
+      {/* RIGHT COLUMN */}
+      <div className="flex flex-col gap-4">
+
+        {/* Email */}
+        <label className="flex flex-col">
+          <span className="text-sm mb-1">Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input input-bordered rounded-lg h-11"
+            placeholder="Enter your email"
+            required
+          />
+        </label>
+
+        {/* Password */}
+        <label className="flex flex-col">
+          <span className="text-sm mb-1">Password</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input input-bordered rounded-lg h-11"
+            placeholder="Enter your password"
+            required
+          />
+        </label>
+
+      </div>
+
+      {/* Error */}
+      {error && (
+        <p className="text-red-500 text-sm col-span-full text-center">
+          {error}
+        </p>
+      )}
+
+      {/* BUTTONS */}
+      <div className="col-span-full flex flex-col gap-3 mt-2">
+        <button
+          type="submit"
+          className="btn btn-primary w-full rounded-lg h-12 hover:scale-[1.02] transition-all"
+        >
+          Sign Up
+        </button>
+
+        <button
+          onClick={() => navigate('/login')}
+          type="button"
+          className="btn btn-ghost w-full rounded-lg h-12"
+        >
+          login
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
       <Footer />
     </>
   );
