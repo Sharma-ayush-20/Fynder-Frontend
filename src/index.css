@@ -11,3 +11,31 @@
 ::-webkit-scrollbar {
   display: none; 
 }
+
+/* Slow floating glow */
+@keyframes float-slow {
+  0% { transform: translate(0,0); opacity: .7; }
+  50% { transform: translate(25px,-15px); opacity: .9; }
+  100% { transform: translate(0,0); opacity: .7; }
+}
+.glow-float {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+/* Fade + slide */
+@keyframes fade-slide {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.fade-slide {
+  animation: fade-slide .5s ease forwards;
+}
+
+/* Soft hover lift */
+.lift-hover {
+  transition: all .25s ease;
+}
+.lift-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
