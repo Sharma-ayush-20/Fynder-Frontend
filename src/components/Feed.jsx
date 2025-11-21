@@ -28,7 +28,7 @@ function Feed() {
         dispatch(addUserFeed(response.data.users));
       }
     } catch (error) {
-      toast.error(error.message);
+      // toast.error(error.message);
     }
   };
 
