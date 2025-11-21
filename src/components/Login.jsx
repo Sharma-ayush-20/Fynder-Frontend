@@ -46,9 +46,9 @@ function Login() {
           className="absolute inset-0 w-full h-full object-cover brightness-70"
         />
 
-      {/* Login Card */}
-<div
-  className="
+        {/* Login Card */}
+        <div
+          className="
     relative z-10
     bg-base-100 dark:bg-base-300
     p-8 sm:p-10
@@ -60,83 +60,81 @@ function Login() {
     min-h-[430px] sm:min-h-[480px] 
     justify-center sm:mt-10
   "
->
-  {/* Heading */}
-  <h1 className="text-3xl sm:text-4xl font-semibold text-primary text-center mb-3 leading-tight">
-    Welcome Back 👋
-  </h1>
+        >
+          {/* Heading */}
+          <h1 className="text-3xl sm:text-4xl font-semibold text-primary text-center mb-3 leading-tight">
+            Welcome Back 👋
+          </h1>
 
-  {/* Subtitle */}
-  <p className="text-base-content/70 text-center mb-8 text-sm sm:text-base leading-relaxed">
-    Continue your Fynder journey and connect with amazing people.
-  </p>
+          {/* Subtitle */}
+          <p className="text-base-content/70 text-center mb-8 text-sm sm:text-base leading-relaxed">
+            Continue your Fynder journey and connect with amazing people.
+          </p>
 
-  {/* Form */}
-  <form className="flex flex-col gap-5 mt-2" onSubmit={handleSubmit}>
-    {/* Email */}
-    <label className="flex flex-col w-full">
-      <span className="text-sm mb-1 font-medium">Email</span>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="
+          {/* Form */}
+          <form className="flex flex-col gap-5 mt-2" onSubmit={handleSubmit}>
+            {/* Email */}
+            <label className="flex flex-col w-full">
+              <span className="text-sm mb-1 font-medium">Email</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="
           input input-bordered w-full 
           text-sm rounded-md
           h-11
         "
-        placeholder="Enter your email"
-        required
-      />
-    </label>
+                placeholder="Enter your email"
+                required
+              />
+            </label>
 
-    {/* Password */}
-    <label className="flex flex-col w-full">
-      <span className="text-sm mb-1 font-medium">Password</span>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="
+            {/* Password */}
+            <label className="flex flex-col w-full">
+              <span className="text-sm mb-1 font-medium">Password</span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="
           input input-bordered w-full 
           text-sm rounded-md
           h-11
         "
-        placeholder="Enter your password"
-        required
-      />
-    </label>
+                placeholder="Enter your password"
+                required
+              />
+            </label>
 
-    {/* Error */}
-    {error && (
-      <p className="text-red-500 text-sm text-center">{error}</p>
-    )}
+            {/* Error */}
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
 
-    {/* Login Button */}
-    <button
-      type="submit"
-      className="
+            {/* Login Button */}
+            <button
+              type="submit"
+              className="
         btn btn-primary w-full 
         text-sm sm:text-base py-3 mt-2 rounded-md
       "
-    >
-      Login
-    </button>
+            >
+              Login
+            </button>
 
-    {/* Sign Up */}
-    <button
-    onClick={() => navigate("/signup")}
-      type="button"
-      className="
+            {/* Sign Up */}
+            <button
+              onClick={() => navigate("/signup")}
+              type="button"
+              className="
         btn btn-ghost w-full text-sm sm:text-base py-3 rounded-md
       "
-    >
-      Create an Account
-    </button>
-  </form>
-</div>
-
-
+            >
+              Create an Account
+            </button>
+          </form>
+        </div>
       </div>
 
       <Footer />

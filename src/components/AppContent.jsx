@@ -14,6 +14,7 @@ import Request from "./Request";
 import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "./Profile";
+import LandingPage from './LandingPage'
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -30,8 +31,8 @@ function AppContent() {
       }
     } catch (err) {
       if (err?.response?.status === 401) {
-        toast.error("Session expired! Please login again.");
-        navigate("/login");
+        // toast.error("Session expired! Please login again.");
+        navigate("/landingpage");
       }
     }
   };
@@ -49,6 +50,7 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/landingpage" element={<LandingPage />} />
 
           {/* Dashboard Routes */}
           <Route path="/" element={<Layout />}>

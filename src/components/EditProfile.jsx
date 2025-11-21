@@ -92,7 +92,7 @@ function EditProfile({ user }) {
                 <input
                   type="number"
                   name="age"
-                  value={formData.age}
+                  value={formData.age || ""} 
                   onChange={handleChange}
                   placeholder="Age"
                   className="input input-bordered w-full"

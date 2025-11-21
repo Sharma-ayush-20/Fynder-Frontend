@@ -2,9 +2,11 @@ import React from "react";
 import { APP_BG } from "../utils/constants.jsx";
 import Footer from "./Footer.jsx";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
     const theme = useSelector(store => store?.theme?.value)
+    const navigate = useNavigate()
   return (
     <>
       <div className="relative mx-auto min-h-screen overflow-x-hidden">
@@ -32,7 +34,7 @@ const LandingPage = () => {
 
             {/* Buttons */}
             <div className="text-center mb-6">
-              <button className={`btn ${theme === "dark" ? "text-white btn-accent" : "text-black btn-accent"} btn-lg px-8 py-3 text-xl shadow-lg hover:scale-105 transition-transform duration-300`}>
+              <button onClick={() => navigate('/login')} className={`btn ${theme === "dark" ? "text-white btn-accent" : "text-black btn-accent"} btn-lg px-8 py-3 text-xl shadow-lg hover:scale-105 transition-transform duration-300`}>
                 Start your journey today
               </button>
             </div>
