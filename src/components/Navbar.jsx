@@ -1,5 +1,5 @@
 import React from "react";
-import ThemeToggle from "./themeToggle";
+import ThemeToggle from "./ThemeToggle";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
