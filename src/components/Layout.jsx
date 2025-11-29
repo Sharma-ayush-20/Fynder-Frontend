@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Menu, X } from "lucide-react";
+import { Crown, Menu, X } from "lucide-react";
 import { LayoutDashboard } from "lucide-react";
 import { Flame, Users2, Mail, Settings } from "lucide-react";
 
@@ -59,7 +59,7 @@ function Layout() {
          }`
               }
             >
-              <Flame className="w-5 h-5" />
+              <Flame className="w-5 h-5 text-red-400" />
               <span>Feed</span>
             </NavLink>
           </li>
@@ -77,7 +77,7 @@ function Layout() {
          }`
               }
             >
-              <Users2 className="w-5 h-5" />
+              <Users2 className="w-5 h-5 text-sky-500" />
               <span>Connections</span>
             </NavLink>
           </li>
@@ -95,8 +95,26 @@ function Layout() {
          }`
               }
             >
-              <Mail className="w-5 h-5" />
+              <Mail className="w-5 h-5 text-orange-500" />
               <span>Requests</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/premium"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 text-[17px] font-medium px-3 py-3 rounded transition-all 
+         ${
+           isActive
+             ? "bg-primary text-primary-content shadow-md"
+             : "hover:bg-base-300 hover:text-primary"
+         }`
+              }
+            >
+              <Crown className="w-5 h-5 text-yellow-500" />
+              <span>Premium</span>
             </NavLink>
           </li>
 
@@ -113,7 +131,7 @@ function Layout() {
          }`
               }
             >
-              <Settings className="w-5 h-5" />
+              <Settings className="w-5 h-5 text-gray-500" />
               <span>Settings</span>
             </NavLink>
           </li>

@@ -15,6 +15,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "./Profile";
 import LandingPage from './LandingPage'
+import Premium from "./Premium";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ function AppContent() {
             <Route path="feed" element={<Feed />} />
             <Route path="connections" element={<Connections />} />
             <Route path="requests" element={<Request />} />
+            <Route path="premium" element={<Premium />} />
           </Route>
         </Routes>
       </div>
