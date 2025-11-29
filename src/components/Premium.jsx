@@ -31,18 +31,16 @@ const PremiumPlans = () => {
   };
 
   const handleBuyClick = async (memberShipType, memberShipPeriod) => {
-    console.log(memberShipType, memberShipPeriod);
     try {
       const orders = await axios.post(
         `${baseUrl}/payment/create`,
         { memberShipType, memberShipPeriod },
         { withCredentials: true }
       );
-      if (orders.status === 200) {
-        console.log(orders.data);
-        const {amount, currency, keyId, notes, orderId} = orders.data
 
-        // Open Razorpay Checkout
+      if (orders.status === 200) {
+        const { amount, currency, keyId, notes, orderId } = orders.data;
+
         const options = {
           key: keyId,
           amount,
@@ -52,8 +50,11 @@ const PremiumPlans = () => {
           order_id: orderId,
           prefill: {
             name: `${notes.firstName} ${notes.lastName}`,
-            email:notes.email,
+            email: notes.email,
             contact: "9999999999",
+          },
+          notes: {
+            userId: notes.userId,
             memberShipType: notes.memberShipType,
             memberShipPeriod: notes.memberShipPeriod,
           },
