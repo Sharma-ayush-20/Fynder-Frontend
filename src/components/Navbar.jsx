@@ -55,18 +55,39 @@ function Navbar() {
             <div
               tabIndex={0}
               role="button"
-              className="avatar cursor-pointer hover:scale-110 transition-all duration-300"
+              className="relative avatar cursor-pointer hover:scale-110 transition-all duration-300"
             >
-              <div className="w-11 h-11 rounded-full ring-2 ring-primary/40 ring-offset-2 ring-offset-base-100 shadow-md overflow-hidden">
+              {/* Avatar Border based on Premium */}
+              <div
+                className={`w-11 h-11 rounded-full overflow-hidden shadow-lg ring-offset-2 ring-offset-base-100 ${
+                  user?.isPremium
+                    ? "ring-4 ring-blue-500/80" 
+                    : "ring-2 ring-primary/40"
+                } transition-all duration-300`}
+              >
                 <img alt="User avatar" src={user.photoUrl} />
               </div>
+
+              {/* Blue Tick Visible ONLY if Premium */}
+              {user?.isPremium && (
+                <span
+                  className="
+          absolute -bottom-0.5 -right-0.5
+          bg-blue-500 text-[10px]
+          w-4 h-4 flex items-center justify-center 
+          rounded-full text-white shadow-lg border-[2px] border-white"
+                >
+                  ✓
+                </span>
+              )}
             </div>
 
-            {/* Dropdown Menu */}
+            {/* Dropdown */}
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-xl mt-5 w-48 p-3 shadow-xl border border-base-300/40 backdrop-blur-md animate-fadeIn"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-xl mt-6 w-52 p-3 shadow-xl border border-base-300/40 backdrop-blur-md animate-fadeIn"
             >
+
               <li>
                 <Link
                   to="/profile"

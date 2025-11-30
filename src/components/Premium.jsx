@@ -8,13 +8,17 @@ import {
   SunMedium,
   IndianRupee,
 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { baseUrl } from "../utils/constants";
+import toast from "react-hot-toast";
+import { updateUser } from "../utils/userSlice";
 
 const PremiumPlans = () => {
   const [billing, setBilling] = useState("monthly");
   const theme = useSelector((store) => store?.theme?.value);
+  const user = useSelector((store) => store?.user);
+  const dispatch = useDispatch();
 
   const isMonthly = billing === "monthly";
 
@@ -46,20 +50,40 @@ const PremiumPlans = () => {
           amount,
           currency,
           name: "Fynder",
-          description: `Upgrade to ${notes.memberShipType} — unlock more profile reach & connections`,
+          description: `Upgrade to ${notes.memberShipType}`,
           order_id: orderId,
           prefill: {
             name: `${notes.firstName} ${notes.lastName}`,
             email: notes.email,
             contact: "9999999999",
           },
-          notes: {
-            userId: notes.userId,
-            memberShipType: notes.memberShipType,
-            memberShipPeriod: notes.memberShipPeriod,
-          },
-          theme: {
-            color: "#6C63FF",
+          theme: { color: "#6C63FF" },
+
+          handler: async function (response) {
+            try {
+              const verify = await axios.post(
+                `${baseUrl}/payment/verify`,
+                {
+                  orderId: orderId,
+                  paymentId: response.razorpay_payment_id,
+                },
+                { withCredentials: true }
+              );
+
+              dispatch(
+                updateUser({
+                  ...verify.data.user,
+                })
+              );
+
+              toast.success("Premium Activated Successfully!");
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            } catch (error) {
+              console.log("VERIFY ERROR:", error);
+              toast.error("Verification failed!");
+            }
           },
         };
 
@@ -204,23 +228,20 @@ const PremiumPlans = () => {
                 </li>
               </ul>
 
-              <div className="card-actions mt-6">
-                {isMonthly ? (
-                  <button
-                    onClick={() => handleBuyClick("silver", "monthly")}
-                    className="btn btn-outline w-full rounded-full"
-                  >
-                    Continue with Silver
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleBuyClick("silver", "yearly")}
-                    className="btn btn-outline w-full rounded-full"
-                  >
-                    Continue with Silver
-                  </button>
-                )}
-              </div>
+              {user?.isPremium && user?.memberShipType === "silver" ? (
+                <button className="btn w-full rounded-full btn-disabled">
+                  ✓ Your Current Plan
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    handleBuyClick("silver", isMonthly ? "monthly" : "yearly")
+                  }
+                  className="btn btn-outline w-full rounded-full"
+                >
+                  Continue with Silver
+                </button>
+              )}
             </div>
           </div>
 
@@ -297,23 +318,29 @@ const PremiumPlans = () => {
                 </li>
               </ul>
 
-              <div className="card-actions mt-6">
-                {isMonthly ? (
-                  <button
-                    onClick={() => handleBuyClick("gold", "monthly")}
-                    className="btn w-full rounded-full border-0 bg-white text-purple-700 hover:bg-slate-100"
-                  >
-                    Go Gold Premium
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleBuyClick("gold", "yearly")}
-                    className="btn w-full rounded-full border-0 bg-white text-purple-700 hover:bg-slate-100"
-                  >
-                    Go Gold Premium
-                  </button>
-                )}
-              </div>
+              {user?.isPremium && user?.memberShipType === "gold" ? (
+                <button className="btn w-full rounded-full btn-disabled bg-yellow-300 text-black">
+                  ✓ Gold Premium Active
+                </button>
+              ) : user?.isPremium && user?.memberShipType === "silver" ? (
+                <button
+                  onClick={() =>
+                    handleBuyClick("gold", isMonthly ? "monthly" : "yearly")
+                  }
+                  className="btn w-full rounded-full bg-white text-purple-700 hover:bg-slate-100"
+                >
+                  Upgrade to Gold
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    handleBuyClick("gold", isMonthly ? "monthly" : "yearly")
+                  }
+                  className="btn w-full rounded-full bg-white text-purple-700 hover:bg-slate-100"
+                >
+                  Go Gold Premium
+                </button>
+              )}
             </div>
           </div>
         </div>

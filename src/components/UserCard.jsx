@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { removeUserFeed } from "../utils/feedSlice";
 
 function UserCard({ user }) {
+  const isPremium = user.isPremium;
   const dispatch = useDispatch();
 
   //accept and ignore the user
@@ -45,10 +46,26 @@ function UserCard({ user }) {
 
         {/* USER DETAILS */}
         <div className="absolute bottom-20 left-4 right-4 text-white">
-          <h2 className="text-3xl font-semibold drop-shadow-lg">
-            {user.firstName}, {user.age}
-          </h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-3xl font-semibold drop-shadow-lg">
+              {user.firstName}, {user.age}
+            </h2>
 
+            {/* PREMIUM BLUE TICK */}
+            {isPremium && (
+              <span
+                className="
+      w-5 h-5 rounded-full flex items-center justify-center
+      bg-blue-700
+      shadow-[0_0_12px_rgba(0,128,255,0.7)]
+      border border-white/70
+      
+    "
+              >
+                ✓
+              </span>
+            )}
+          </div>
           <p className="text-sm opacity-90 mt-1">{user.gender}</p>
 
           <p className="text-xs opacity-80 mt-2 line-clamp-2">{user.about}</p>
