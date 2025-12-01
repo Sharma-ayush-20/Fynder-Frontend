@@ -16,6 +16,7 @@ import Signup from "./Signup";
 import Profile from "./Profile";
 import LandingPage from './LandingPage'
 import Premium from "./Premium";
+import Chat from "./Chat";
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function AppContent() {
             <Route path="connections" element={<Connections />} />
             <Route path="requests" element={<Request />} />
             <Route path="premium" element={<Premium />} />
+            <Route path="chat/:targetUserId" element={<Chat />} />
           </Route>
         </Routes>
       </div>

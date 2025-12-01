@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
 import toast from "react-hot-toast";
 import { MessageCircle } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Connections() {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store?.connection);
-  console.log(connections);
+  const navigate = useNavigate();
+  // console.log(connections);
 
   const getConnections = async () => {
     try {
@@ -88,7 +89,7 @@ function Connections() {
               </div>
 
               {/* RIGHT: Message Button */}
-              <button
+              <button onClick={() => navigate(`/chat/${user._id}`)}
                 className="
               btn btn-sm btn-primary 
               rounded-full px-4
