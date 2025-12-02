@@ -2,35 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Send, MoreVertical } from "lucide-react";
+import { createSocketConnection } from "../utils/socket";
 
 function Chat() {
   const navigate = useNavigate();
   const user = useSelector((store) => store?.user);
+  const userId = user?._id;
   const { targetUserId } = useParams();
+  // console.log(targetUserId)
 
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-    { id: 1, text: "Hey Bhai! 😄", sender: "other" },
-    { id: 2, text: "Bata kya scene hai? 🔥", sender: "me" },
-  ]);
-
+  const [messages, setMessages] = useState([]); //all messages
+  const [messageInput, setMessageInput] = useState("");//current message input
   const endRef = useRef(null);
 
   useEffect(() => {
@@ -38,13 +20,43 @@ function Chat() {
   }, [messages]);
 
   const handleSend = () => {
-    if (!message.trim()) return;
-    setMessages((prev) => [
-      ...prev,
-      { id: Date.now(), text: message, sender: "me" },
-    ]);
-    setMessage("");
+    if (!messageInput.trim()) return;
+
+    const newMsgObj = {
+      firstName: user?.firstName,
+      userId,
+      targetUserId,
+      text: messageInput,
+    };
+
+    const socket = createSocketConnection()
+    socket.emit("sendMessage", newMsgObj)
+
+    // setMessages((prev) => [...prev, newMsgObj]);
+    // setMessageInput("");
   };
+
+  useEffect(() => {
+    if (!userId) return;
+    //create socket connection
+    const socket = createSocketConnection();
+    //As soon as the page load, the socket connection is made and joinChat event is emitted
+    socket.emit("joinChat", {
+      firstName: user?.firstName,
+      userId,
+      targetUserId,
+    });
+
+    //received the message 
+    socket.on("messageReceived", ({firstName, text}) => {
+      console.log(firstName + ": " + text)
+      setMessages(messages => [...messages, { firstName, text }])
+      setMessageInput("")
+    })
+
+    //socket disconnect
+    return () => socket.disconnect();
+  }, [userId, targetUserId]);
 
   return (
     <>
@@ -95,21 +107,22 @@ function Chat() {
             className="flex-1 px-4 py-3 overflow-y-auto space-y-3 
                 bg-base-200"
           >
-            {messages.map((m) => (
+            {messages.map((m, index) => (
               <div
-                key={m.id}
+                // key={m?.id}
+                key={index}
                 className={`chat ${
-                  m.sender === "me" ? "chat-end" : "chat-start"
+                  m?.sender === "me" ? "chat-end" : "chat-start"
                 }`}
               >
                 <div
                   className={`chat-bubble px-4 py-2 text-sm font-medium shadow-md
-        ${
-          m.sender === "me"
-            ? "bg-[#4CAF50] text-white"
-            : "bg-[#2196F3] text-white"
-        }
-        `}
+                ${
+                  m?.sender === "me"
+                    ? "bg-[#4CAF50] text-white"
+                    : "bg-[#2196F3] text-white"
+                }
+                `}
                 >
                   {m.text}
                 </div>
@@ -123,8 +136,8 @@ function Chat() {
             <input
               type="text"
               placeholder="Message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               className="input w-full rounded bg-base-200 px-4 py-2"
             />

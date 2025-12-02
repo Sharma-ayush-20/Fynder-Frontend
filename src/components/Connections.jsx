@@ -55,7 +55,7 @@ function Connections() {
         <div className="flex flex-col gap-4">
           {connections.map((user) => (
             <div
-              key={user._id}
+              key={user?._id}
               className="flex items-center justify-between bg-base-100 border border-base-300/40 rounded-xl px-4 py-3 shadow-sm hover:shadow-md
             transition-all duration-300
             backdrop-blur-sm"
@@ -66,8 +66,8 @@ function Connections() {
                 <div className="relative">
                   {user?.photoUrl ? (
                     <img
-                      src={user.photoUrl}
-                      alt={user.firstName}
+                      src={user?.photoUrl}
+                      alt={user?.firstName}
                       className="w-14 h-14 rounded-full object-cover shadow-sm border border-base-300/40"
                     />
                   ) : (
@@ -80,16 +80,16 @@ function Connections() {
                 {/* User Info */}
                 <div>
                   <h2 className="text-base font-semibold">
-                    {user.firstName} {user.lastName}
+                    {user?.firstName} {user?.lastName}
                   </h2>
                   <p className="text-xs text-base-content/60 line-clamp-1">
-                    {user.about || "No bio available"}
+                    {user?.about || "No bio available"}
                   </p>
                 </div>
               </div>
 
               {/* RIGHT: Message Button */}
-              <button onClick={() => navigate(`/chat/${user._id}`)}
+              <button onClick={() => navigate(`/chat/${user?._id}`)}
                 className="
               btn btn-sm btn-primary 
               rounded-full px-4
