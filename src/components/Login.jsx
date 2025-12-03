@@ -31,8 +31,8 @@ function Login() {
       }
     } catch (error) {
       setError(error?.response?.data?.message);
-      console.log(error);
-      toast.error(error.message);
+      // console.log(error);
+      // toast.error(error.message);
     }
   };
 

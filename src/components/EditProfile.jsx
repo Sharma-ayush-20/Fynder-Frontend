@@ -14,7 +14,9 @@ function EditProfile({ user }) {
     gender: user.gender,
     about: user.about,
     photoUrl: user.photoUrl,
-    skills: user.skills || [],
+    skills: Array.isArray(user.skills)
+      ? user.skills
+      : user.skills?.split(",").map((s) => s.trim()) || [],
   });
 
   const dispatch = useDispatch();
@@ -31,9 +33,23 @@ function EditProfile({ user }) {
 
   const saveProfile = async (e) => {
     e.preventDefault();
+
+    const uploadData = new FormData();
+    uploadData.append("firstName", formData.firstName);
+    uploadData.append("lastName", formData.lastName);
+    uploadData.append("age", formData.age);
+    uploadData.append("gender", formData.gender);
+    uploadData.append("about", formData.about);
+    uploadData.append("skills", formData.skills);
+
+    if (formData.photoUrl instanceof File) {
+      uploadData.append("photoUrl", formData.photoUrl);
+    }
+
     try {
-      const res = await axios.patch(`${baseUrl}/profile/edit`, formData, {
+      const res = await axios.patch(`${baseUrl}/profile/edit`, uploadData, {
         withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       if (res.status === 200) {
@@ -92,7 +108,7 @@ function EditProfile({ user }) {
                 <input
                   type="number"
                   name="age"
-                  value={formData.age || ""} 
+                  value={formData.age || ""}
                   onChange={handleChange}
                   placeholder="Age"
                   className="input input-bordered w-full"
@@ -129,50 +145,103 @@ function EditProfile({ user }) {
             <div className="bg-base-100 p-4 rounded-xl border border-base-300">
               <h3 className="font-semibold text-lg mb-3">Profile Photo</h3>
 
-              <input
-                type="text"
-                name="photoUrl"
-                value={formData.photoUrl}
-                onChange={handleChange}
-                placeholder="Paste image URL"
-                className="input input-bordered w-full"
-              />
+              {/* Show Existing/Preview Image */}
+              <div className="flex flex-col items-center gap-3">
+                <img
+                  src={
+                    formData.photoUrl instanceof File
+                      ? URL.createObjectURL(formData.photoUrl)
+                      : formData.photoUrl
+                  }
+                  alt="Preview"
+                  className="w-28 h-28 rounded-full object-cover border-2 border-primary shadow-md"
+                />
 
-              {formData.photoUrl && (
-                <div className="mt-4 flex justify-center">
-                  <img
-                    src={formData.photoUrl}
-                    alt="Preview"
-                    className="w-28 h-28 rounded-full object-cover border-2 border-primary shadow-md"
-                  />
-                </div>
-              )}
+                {/* Upload Input */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="photoUrl"
+                  className="file-input file-input-bordered w-full"
+                  onChange={(e) =>
+                    setFormData({ ...formData, photoUrl: e.target.files[0] })
+                  }
+                />
+              </div>
             </div>
 
             {/* SKILLS */}
             <div className="bg-base-100 p-4 rounded-xl border border-base-300">
               <h3 className="font-semibold text-lg mb-3">Skills</h3>
 
+              {/* Add Skill Input */}
               <input
                 type="text"
-                value={formData.skills.join(", ")}
-                onChange={handleSkillsChange}
-                placeholder="React, Node, JavaScript..."
-                className="input input-bordered w-full"
+                placeholder="Add a skill & hit Enter 😎"
+                className="input input-bordered w-full mb-3"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && e.target.value.trim()) {
+                    e.preventDefault();
+                    let newSkill = e.target.value.trim();
+
+                    if (!formData.skills.includes(newSkill)) {
+                      setFormData({
+                        ...formData,
+                        skills: [...formData.skills, newSkill],
+                      });
+                    }
+
+                    e.target.value = "";
+                  }
+                }}
               />
 
-              {formData.skills.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {formData.skills.map((s, i) => (
-                    <span
-                      key={i}
-                      className="badge badge-primary badge-outline px-3 py-2 rounded-md"
+              {/* Skill Chips */}
+              <div className="flex flex-wrap gap-3 mt-3">
+                {formData.skills.map((skill, idx) => {
+                  const funEmojis = [
+                    "🔥",
+                    "⚡",
+                    "🚀",
+                    "🎯",
+                    "💥",
+                    "✨",
+                    "💡",
+                    "🎵",
+                    "🎮",
+                    "💪",
+                  ];
+                  const emoji = funEmojis[idx % funEmojis.length];
+
+                  return (
+                    <div
+                      key={idx}
+                      className="px-4 py-2 rounded-full flex items-center gap-2 
+          bg-gradient-to-r from-[#8A2BE2] to-[#4B0082]
+          text-white shadow-md cursor-pointer select-none
+          transition-all duration-300
+          hover:-translate-y-1 hover:shadow-xl hover:brightness-110"
                     >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              )}
+                      <span className="text-sm font-medium">
+                        {emoji} {skill}
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = formData.skills.filter(
+                            (_, i) => i !== idx
+                          );
+                          setFormData({ ...formData, skills: updated });
+                        }}
+                        className="text-xs hover:text-red-300 transition-all"
+                      >
+                        ✖
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* SUBMIT */}
