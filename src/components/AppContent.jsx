@@ -14,9 +14,17 @@ import Request from "./Request";
 import Login from "./Login";
 import Signup from "./Signup";
 import Profile from "./Profile";
-import LandingPage from './LandingPage'
+import LandingPage from "./LandingPage";
 import Premium from "./Premium";
 import Chat from "./Chat";
+import AboutUs from "./AboutUs";
+import Careers from "./Careers";
+import Blog from "./Blog";
+import Contact from "./Contact";
+import HelpCenter from "./HelpCenter"
+import FAQs from "./FAQs"
+import Terms from "./Terms"
+import PrivacyPolicy from "./PrivacyPolicy"
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -46,13 +54,21 @@ function AppContent() {
   return (
     <>
       <Navbar />
-      <div>   
+      <div>
         <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/landingpage" element={<LandingPage />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/help" element={<HelpCenter />} />
+          <Route path="/faq" element={<FAQs />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
 
           {/* Dashboard Routes */}
           <Route path="/" element={<Layout />}>
