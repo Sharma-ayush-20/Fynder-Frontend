@@ -89,7 +89,7 @@ function Connections() {
               </div>
 
               {/* RIGHT: Message Button */}
-              <button onClick={() => navigate(`/chat/${user?._id}`)}
+              <button onClick={() => navigate(`/chat/${user?._id}`,{ state: { user } })}
                 className="
               btn btn-sm btn-primary 
               rounded-full px-4
