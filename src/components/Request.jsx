@@ -63,7 +63,7 @@ function Request() {
   return (
     <div className="relative p-4 sm:p-8">
       {/* Glow Effect */}
-      <div className="absolute left-40 top-30 w-72 h-72 bg-primary/20 blur-[120px] opacity-40 pointer-events-none"></div>
+      <div className="absolute left-40 top-30 w-42 h-52 bg-primary/20 blur-[120px] opacity-40 pointer-events-none"></div>
 
       <h1 className="text-2xl sm:text-3xl font-bold text-primary mb-10 mt-10 sm:mt-0">
         Requests Waiting For You 
