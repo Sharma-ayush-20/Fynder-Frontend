@@ -32,35 +32,45 @@ function EditProfile({ user }) {
   };
 
   const saveProfile = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const uploadData = new FormData();
-    uploadData.append("firstName", formData.firstName);
-    uploadData.append("lastName", formData.lastName);
-    uploadData.append("age", formData.age);
-    uploadData.append("gender", formData.gender);
-    uploadData.append("about", formData.about);
-    uploadData.append("skills", formData.skills);
+  const uploadData = new FormData();
 
-    if (formData.photoUrl instanceof File) {
-      uploadData.append("photoUrl", formData.photoUrl);
+  // Only append fields if user has entered value
+  if (formData.firstName) uploadData.append("firstName", formData.firstName);
+  if (formData.lastName) uploadData.append("lastName", formData.lastName);
+  if (formData.age) uploadData.append("age", formData.age);
+  if (formData.gender) uploadData.append("gender", formData.gender);
+  if (formData.about) uploadData.append("about", formData.about);
+
+  // Skills array empty nahi honi chahiye
+  if (formData.skills && formData.skills.length > 0) {
+    formData.skills.forEach((skill) => {
+      uploadData.append("skills", skill);
+    });
+  }
+
+  // Image is a File
+  if (formData.photoUrl instanceof File) {
+    uploadData.append("photoUrl", formData.photoUrl);
+  }
+
+  try {
+    const res = await axios.patch(`${baseUrl}/profile/edit`, uploadData, {
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    if (res.status === 200) {
+      dispatch(addUser(res.data.data));
+      toast.success(res.data.message);
+      navigate("/");
     }
+  } catch (error) {
+    toast.error(error?.response?.data?.message || "Something went wrong");
+  }
+};
 
-    try {
-      const res = await axios.patch(`${baseUrl}/profile/edit`, uploadData, {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      if (res.status === 200) {
-        dispatch(addUser(res.data.data));
-        toast.success(res.data.message);
-        navigate("/");
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong");
-    }
-  };
 
   return (
     <div className="min-h-screen bg-base-100 flex items-center justify-center p-4 sm:mt-12 mt-10">

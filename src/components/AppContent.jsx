@@ -26,6 +26,7 @@ import FAQs from "./FAQs"
 import Terms from "./Terms"
 import PrivacyPolicy from "./PrivacyPolicy"
 import UserDetails from "./UserDetails";
+import Settings from './Settings'
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ function AppContent() {
             <Route path="premium" element={<Premium />} />
             <Route path="chat/:targetUserId" element={<Chat />} />
             <Route path="/profile/:id" element={<UserDetails />} />
+            <Route path="/settings" element={<Settings />}/>
           </Route>
         </Routes>
       </div>
