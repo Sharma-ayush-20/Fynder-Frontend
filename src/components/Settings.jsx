@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Sun, Moon, LogOut, Crown, Edit, Shield, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -6,16 +6,29 @@ import ThemeToggle from "./ThemeToggle";
 import { useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../utils/constants";
+import { removeUser } from "../utils/userSlice";
 
 export default function Settings() {
   const user = useSelector((store) => store?.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const handleLogout = () => {
-    toast.success("Logged out successfully");
-    navigate("/login");
-    localStorage.clear();
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/logout`,
+        {},
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        dispatch(removeUser());
+        toast.success(response.data.message);
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleDelete = async () => {
@@ -26,7 +39,7 @@ export default function Settings() {
 
     if (res.status === 200) {
       toast.success("Account deleted successfully!");
-      localStorage.clear();
+      dispatch(removeUser())
       navigate("/landingpage"); 
     }
   } catch (error) {
