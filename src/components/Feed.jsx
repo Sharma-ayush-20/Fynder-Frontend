@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUserFeed } from "../utils/feedSlice";
 import { toast } from "react-hot-toast";
 import UserCard from "./UserCard";
+import SkeletonUserCard from "./SkeletonUserCard";
 
 function Feed() {
   const dispatch = useDispatch();
@@ -16,6 +17,18 @@ function Feed() {
     "💬 Be yourself — authenticity beats perfection.",
     "📸 Smile in photos — it increases matches by 22%.",
   ];
+
+  const motivationLines = [
+    "🚀 Just a moment… someone awesome is heading your way!",
+    "✨ Good things take time. Amazing people loading…",
+    "❤️ The perfect match might just be one refresh away!",
+    "🤝 Hang tight! Your next connection is coming soon!",
+    "🌟 Keep smiling! Great vibes attract great people.",
+    "🔥 No matches right now — but magic is just around the corner!",
+  ];
+
+  const randomLine =
+    motivationLines[Math.floor(Math.random() * motivationLines.length)];
 
   const [tipIndex, setTipIndex] = useState(0);
 
@@ -45,7 +58,7 @@ function Feed() {
   return (
     <>
       {/* <h1 className="text-3xl font-extrabold text-primary mb-8 text-center tracking-tight">Discover People</h1> */}
-      <div className="relative mt-20 sm:mt-6 bg-base-200 px-4">
+      <div className="relative mt-10 sm:mt-6 bg-base-200 px-4">
         {/* === RIGHT SIDE BLURRED SHAPE (Desktop only) === */}
         <div className="hidden sm:block absolute top-40 right-24 w-72 h-72 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -69,12 +82,14 @@ function Feed() {
         </div>
 
         {/* === USER CARD === */}
-        {feed && feed.length > 0 ? (
+        {!feed ? (
+          <SkeletonUserCard />
+        ) : feed.length > 0 ? (
           <UserCard user={feed[0]} />
         ) : (
-          <div className="col-span-full text-center text-gray-500">
-            No users found 💔
-          </div>
+          <p className="text-center mt-6 text-base-content/70 animate-fade-in">
+            {randomLine}
+          </p>
         )}
       </div>
     </>

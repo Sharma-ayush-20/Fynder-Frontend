@@ -138,7 +138,7 @@ function Layout() {
         </ul>
 
         {/* ======= USER INFO ======= */}
-        <div className="border-t border-base-300 pt-4 mt-4 mb-6 px-3">
+        <div className="border-t border-base-300 pt-4 mb-6 px-3">
           {user && (
             <div className="flex items-center gap-3">
               <img
