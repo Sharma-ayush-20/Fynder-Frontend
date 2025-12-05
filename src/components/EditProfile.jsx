@@ -50,8 +50,7 @@ function EditProfile({ user }) {
     if (formData.about?.trim())
       uploadData.append("about", formData.about.trim());
 
-    // Skills → always send valid JSON array
-    if (Array.isArray(formData.skills)) {
+    if (Array.isArray(formData.skills) && formData.skills.length > 0) {
       uploadData.append("skills", JSON.stringify(formData.skills));
     }
 
@@ -63,9 +62,6 @@ function EditProfile({ user }) {
     try {
       const res = await axios.patch(`${baseUrl}/profile/edit`, uploadData, {
         withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
       });
 
       if (res.status === 200) {
@@ -191,74 +187,22 @@ function EditProfile({ user }) {
             <div className="bg-base-100 p-4 rounded-xl border border-base-300">
               <h3 className="font-semibold text-lg mb-3">Skills</h3>
 
-              {/* Add Skill Input */}
               <input
                 type="text"
-                placeholder="Add a skill & hit Enter 😎"
-                className="input input-bordered w-full mb-3"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && e.target.value.trim()) {
-                    e.preventDefault();
-                    let newSkill = e.target.value.trim();
+                name="skills"
+                placeholder="actor, spiderman, sports"
+                className="input input-bordered w-full"
+                value={formData.skills.join(", ")}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const skillArray = value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
 
-                    if (!formData.skills.includes(newSkill)) {
-                      setFormData({
-                        ...formData,
-                        skills: [...formData.skills, newSkill],
-                      });
-                    }
-
-                    e.target.value = "";
-                  }
+                  setFormData({ ...formData, skills: skillArray });
                 }}
               />
-
-              {/* Skill Chips */}
-              <div className="flex flex-wrap gap-3 mt-3">
-                {formData.skills.map((skill, idx) => {
-                  const funEmojis = [
-                    "🔥",
-                    "⚡",
-                    "🚀",
-                    "🎯",
-                    "💥",
-                    "✨",
-                    "💡",
-                    "🎵",
-                    "🎮",
-                    "💪",
-                  ];
-                  const emoji = funEmojis[idx % funEmojis.length];
-
-                  return (
-                    <div
-                      key={idx}
-                      className="px-4 py-2 rounded-full flex items-center gap-2 
-          bg-gradient-to-r from-[#8A2BE2] to-[#4B0082]
-          text-white shadow-md cursor-pointer select-none
-          transition-all duration-300
-          hover:-translate-y-1 hover:shadow-xl hover:brightness-110"
-                    >
-                      <span className="text-sm font-medium">
-                        {emoji} {skill}
-                      </span>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = formData.skills.filter(
-                            (_, i) => i !== idx
-                          );
-                          setFormData({ ...formData, skills: updated });
-                        }}
-                        className="text-xs hover:text-red-300 transition-all"
-                      >
-                        ✖
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
 
             {/* SUBMIT */}
