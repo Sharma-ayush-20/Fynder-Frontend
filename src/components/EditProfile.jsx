@@ -32,45 +32,52 @@ function EditProfile({ user }) {
   };
 
   const saveProfile = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const uploadData = new FormData();
+    const uploadData = new FormData();
 
-  // Only append fields if user has entered value
-  if (formData.firstName) uploadData.append("firstName", formData.firstName);
-  if (formData.lastName) uploadData.append("lastName", formData.lastName);
-  if (formData.age) uploadData.append("age", formData.age);
-  if (formData.gender) uploadData.append("gender", formData.gender);
-  if (formData.about) uploadData.append("about", formData.about);
+    // Safely append fields (only if changed or exists)
+    if (formData.firstName?.trim())
+      uploadData.append("firstName", formData.firstName.trim());
 
-  // Skills array empty nahi honi chahiye
-  if (formData.skills && formData.skills.length > 0) {
-    formData.skills.forEach((skill) => {
-      uploadData.append("skills", skill);
-    });
-  }
+    if (formData.lastName?.trim())
+      uploadData.append("lastName", formData.lastName.trim());
 
-  // Image is a File
-  if (formData.photoUrl instanceof File) {
-    uploadData.append("photoUrl", formData.photoUrl);
-  }
+    if (formData.age) uploadData.append("age", formData.age);
 
-  try {
-    const res = await axios.patch(`${baseUrl}/profile/edit`, uploadData, {
-      withCredentials: true,
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    if (formData.gender) uploadData.append("gender", formData.gender);
 
-    if (res.status === 200) {
-      dispatch(addUser(res.data.data));
-      toast.success(res.data.message);
-      navigate("/");
+    if (formData.about?.trim())
+      uploadData.append("about", formData.about.trim());
+
+    // Skills → always send valid JSON array
+    if (Array.isArray(formData.skills)) {
+      uploadData.append("skills", JSON.stringify(formData.skills));
     }
-  } catch (error) {
-    toast.error(error?.response?.data?.message || "Something went wrong");
-  }
-};
 
+    // Image → ONLY if new file uploaded
+    if (formData.photoUrl instanceof File) {
+      uploadData.append("photoUrl", formData.photoUrl);
+    }
+
+    try {
+      const res = await axios.patch(`${baseUrl}/profile/edit`, uploadData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (res.status === 200) {
+        dispatch(addUser(res.data.data));
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log("UPDATE ERROR:", error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-base-100 flex items-center justify-center p-4 sm:mt-12 mt-10">
