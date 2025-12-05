@@ -13,31 +13,33 @@ function App() {
         toastOptions={{
           duration: 3500,
           style: {
-            background: "var(--b2)",
-            color: "var(--bc)",
             borderRadius: "14px",
             padding: "12px 18px",
             fontSize: "0.9rem",
-            border: "1px solid var(--b3)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
             animation: "fadeSlideIn 0.45s ease",
+            color: "#ffffff",
+            boxShadow: "0 6px 20px rgba(0,0,0,0.18)",
           },
           success: {
+            style: {
+              background: "#00D27F",
+            },
             iconTheme: {
-              primary: "var(--su)",
-              secondary: "var(--b1)",
+              primary: "#ffffff",
+              secondary: "#00A868",
             },
           },
           error: {
+            style: {
+              background: "#FF3B30",
+            },
             iconTheme: {
-              primary: "var(--er)",
-              secondary: "var(--b1)",
+              primary: "#ffffff",
+              secondary: "#C4001D",
             },
           },
         }}
       />
-
       <BrowserRouter>
         <AppContent />
       </BrowserRouter>
